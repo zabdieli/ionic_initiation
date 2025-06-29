@@ -1,0 +1,46 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Inscription</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="register-form" [formGroup]="registerForm">
+    <ion-item>
+      <ion-input label="E-mail"
+                 type="email"
+                 labelPlacement="stacked"
+                 placeholder="Entrer votre e-mail"
+                 [required]="true"
+                 formControlName="email">
+      </ion-input>
+    </ion-item>
+    @if(registerForm.controls.email.errors && registerForm.controls.email.dirty) {
+      <span class="error-message">Votre email est invalide. </span>
+    }
+
+
+    <ion-item>
+      <ion-input label="Mot de passe"
+                 [type]="typeOfPasswordInput"
+                 labelPlacement="stacked"
+                 placeholder="Entrer votre mot de passe"
+                 [required]="true"
+                 formControlName="password">
+        <ion-icon [name]="iconOfPasswordInput"
+                  slot="end"
+                  (click)="onTogglePasswordVisibility()">
+        </ion-icon>
+      </ion-input>
+    </ion-item>
+    @if(registerForm.controls.password.errors && registerForm.controls.password.dirty) {
+      <span class="error-message">Votre mot de passe est invalide. </span>
+    }
+
+    <div class="register-button">
+      <ion-button mode="ios" expand="block" (click)="onRegister()" [disabled]="registerForm.invalid">
+        S'inscrire
+      </ion-button>
+    </div>
+  </div>
+</ion-content>
