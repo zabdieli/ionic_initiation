@@ -6,6 +6,33 @@
 
 <ion-content>
   <div class="register-form" [formGroup]="registerForm">
+
+     <ion-item>
+      <ion-input label="Prénom"
+                 type="text"
+                 labelPlacement="stacked"
+                 placeholder="Entrer votre prénom"
+                 formControlName="firstname"
+                 [required]="true">
+      </ion-input>
+    </ion-item>
+    @if(registerForm.controls.firstname.errors && registerForm.controls.firstname.dirty) {
+      <span class="error-message">Veuillez entrer un prénom.</span>
+    }
+
+    <ion-item>
+      <ion-input label="Nom"
+                 type="text"
+                 labelPlacement="stacked"
+                 placeholder="Entrer votre nom"
+                 formControlName="lastname"
+                 [required]="true">
+      </ion-input>
+    </ion-item>
+    @if(registerForm.controls.lastname.errors && registerForm.controls.lastname.dirty) {
+      <span class="error-message">Veuillez entrer un prénom.</span>
+    }
+
     <ion-item>
       <ion-input label="E-mail"
                  type="email"

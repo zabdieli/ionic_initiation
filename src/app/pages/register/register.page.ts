@@ -13,10 +13,19 @@ import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } 
 import { addIcons } from "ionicons";
 import { eyeOffOutline, eyeOutline } from "ionicons/icons";
 import { Router, RouterModule } from "@angular/router";
+import { StorageKeyEnum } from 'src/app/core/services/storage/storage-key.enum';
+import { StorageService } from 'src/app/core/services/storage/storage.service';
+import { LoginRequest } from 'src/app/core/interface/login-interface';
+import { AuthentificationService } from 'src/app/core/services/authentification/authentification.service';
+import { CommonModule } from '@angular/common';
+import { HttpClientModule } from '@angular/common/http';
+
 
 export type Registration = {
   email: string;
   password: string;
+  firstname: string;
+  lastname: string;
 }
 
 @Component({
@@ -36,10 +45,14 @@ export type Registration = {
     IonIcon,
     ReactiveFormsModule,
     RouterModule,
+    CommonModule,
+    HttpClientModule
   ]
 })
 export class RegisterPage {
   protected registerForm = new FormGroup({
+    firstname: new FormControl('', [Validators.required]),
+    lastname: new FormControl('', [Validators.required]),
     email: new FormControl('', [Validators.required, Validators.email]),
     password: new FormControl('', [Validators.required, Validators.minLength(10)]),
   });
@@ -47,7 +60,10 @@ export class RegisterPage {
   protected typeOfPasswordInput = 'password';
   protected iconOfPasswordInput = 'eye-outline';
 
-  constructor(private router: Router) {
+    constructor(private router: Router,
+      private authenticationService: AuthentificationService,
+      private storageService: StorageService
+  ) {
     addIcons({eyeOutline, eyeOffOutline});
   }
 
@@ -63,6 +79,21 @@ export class RegisterPage {
 
   public onRegister(): void {
     const registrationValue: Registration = this.registerForm.value as Registration;
+    const registerRequest = {
+      email: registrationValue.email,
+      password: registrationValue.password,
+      prenom: registrationValue.firstname,
+      nom: registrationValue.lastname
+    };
+    this.authenticationService.register(registerRequest).subscribe({
+        next: (response: any) => {
+          console.log('Inscription réussie:', response);
+          this.storageService.setItem(StorageKeyEnum.ACCESS_TOKEN, response.access_token);
+            this.router.navigate(['/todos']);
+        },
+        error: (error: any) => {
+          console.error('Erreur lors de l’inscription:', error);
+        }
+      });
+      }
   }
-
-}

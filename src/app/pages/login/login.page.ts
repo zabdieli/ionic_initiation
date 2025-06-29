@@ -15,6 +15,11 @@ import { Router } from "@angular/router";
 import { addIcons } from "ionicons";
 import { eyeOffOutline, eyeOutline } from "ionicons/icons";
 import { Registration } from "../register/register.page";
+import { StorageKeyEnum } from 'src/app/core/services/storage/storage-key.enum';
+import { LoginRequest } from 'src/app/core/interface/login-interface';
+import { LoginResponse } from 'src/app/core/interface/login-interface';
+import { AuthentificationService } from 'src/app/core/services/authentification/authentification.service';
+import { StorageService } from 'src/app/core/services/storage/storage.service';
 
 export type Login = {
   email: string;
@@ -38,7 +43,10 @@ export class LoginPage {
   protected typeOfPasswordInput = 'password';
   protected iconOfPasswordInput = 'eye-outline';
 
-  constructor(private router: Router) {
+  constructor(private router: Router,
+              private authenticationService: AuthentificationService,
+              private storageService: StorageService
+  ) {
     addIcons({eyeOutline, eyeOffOutline});
   }
 
@@ -53,7 +61,18 @@ export class LoginPage {
   }
 
   public onLogin(): void {
-    const loginValue: Login = this.loginForm.value as Registration;
-  }
+  const loginValue: LoginRequest = this.loginForm.value as LoginRequest;
+
+  this.authenticationService.login(loginValue).subscribe({
+    next: (response: any) => {
+          console.log('Connexion réussie:', response);
+          this.storageService.setItem(StorageKeyEnum.ACCESS_TOKEN, response.access_token);
+            this.router.navigate(['/todos']);
+        },
+        error: (error: any) => {
+          console.error('Erreur lors de la connexion:', error);
+        }
+      });
+}
 
 }
