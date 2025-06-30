@@ -16,3 +16,11 @@ export interface UserLoginData {
   readonly password: string;
   readonly createdAt: string;
 }
+
+export interface UserProfileResponse {
+  readonly id: number;
+  readonly email: string;
+  readonly nom: string;
+  readonly prenom: string;
+  readonly createdAt: string;
+}

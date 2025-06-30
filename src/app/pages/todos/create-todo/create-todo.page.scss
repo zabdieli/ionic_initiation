@@ -1,0 +1,32 @@
+.create-todo-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+
+  ion-item {
+    border-radius: 8px;
+    --background: #f8f9fa;
+  }
+
+  .checkbox-item {
+    display: flex;
+    align-items: center;
+    margin-top: 8px;
+  }
+
+  .error-message {
+    color: #eb445a;
+    font-size: 0.85rem;
+    margin-left: 12px;
+  }
+
+  .create-button {
+    margin-top: 24px;
+
+    ion-button {
+      font-weight: 600;
+      font-size: 1rem;
+      --border-radius: 20px;
+    }
+  }
+}

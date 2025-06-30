@@ -1,10 +1,10 @@
 export interface Todo {
   readonly id: number;
+  readonly ownerId: number;
+  readonly createdAt: string;
   readonly title: string;
   readonly description: string;
   readonly completed: boolean;
-  readonly ownerId: number;
-  readonly createdAt: string;
 }
 
 export interface CreateTodoRequest {
@@ -15,10 +15,10 @@ export interface CreateTodoRequest {
 
 export interface CreateTodoResponse {
   readonly id: number;
-  readonly title: string;
-  readonly description: string;
   readonly completed: boolean;
   readonly createdAt: string;
+  readonly title: string;
+  readonly description: string;
   readonly updatedAt: string;
 }
 

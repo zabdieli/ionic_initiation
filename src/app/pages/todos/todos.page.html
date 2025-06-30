@@ -1,13 +1,41 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>todos</ion-title>
+<ion-header>
+  <ion-toolbar color="tertiary">
+    <ion-title> Mes tâches</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">todos</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content class="ion-padding">
+  <ion-button expand="block" color="success" shape="round" (click)="createTodo()">
+    <ion-icon slot="start" name="add-circle-outline"></ion-icon>
+    Ajouter une tâche
+  </ion-button>
+
+  <ion-list lines="inset">
+    <ion-text color="medium" *ngIf="todos.length === 0">
+      <p class="ion-text-center ion-margin-top">Aucune tâche pour le moment</p>
+    </ion-text>
+
+    <ion-item *ngFor="let todo of todos; trackBy: trackByTodoId" class="todo-item">
+      <ion-label>
+        <h2>{{ todo.title }}</h2>
+        <p>{{ todo.description }}</p>
+      </ion-label>
+
+      <ion-buttons slot="end">
+        <ion-button fill="clear" color="primary" (click)="editTodo(todo)">
+          <ion-icon slot="icon-only" name="create-outline"></ion-icon>
+        </ion-button>
+        <ion-button fill="clear" color="danger" (click)="deleteTodo(todo)">
+          <ion-icon slot="icon-only" name="trash-bin-outline"></ion-icon>
+        </ion-button>
+      </ion-buttons>
+    </ion-item>
+  </ion-list>
+
+  <div class="logout-section">
+    <ion-button expand="block" color="medium" (click)="logout()">
+      <ion-icon slot="start" name="log-out-outline"></ion-icon>
+      Déconnexion
+    </ion-button>
+  </div>
 </ion-content>

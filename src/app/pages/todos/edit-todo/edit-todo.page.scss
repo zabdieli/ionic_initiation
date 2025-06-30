@@ -1,0 +1,22 @@
+.edit-form {
+  display: flex;
+  flex-direction: column;
+
+  ion-item {
+    --highlight-color-focused: var(--ion-color-primary);
+  }
+
+  ion-text {
+    margin: 4px 16px 0;
+  }
+
+  ion-button {
+    margin-top: 20px;
+  }
+}
+
+.error-message {
+  color: var(--ion-color-danger);
+  font-size: 0.8rem;
+  margin-left: 16px;
+}
